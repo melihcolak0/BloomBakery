@@ -72,6 +72,8 @@ Kullanıcılar burada:
 Bloom Bakery, klasik bir ürün yönetimi projesinin ötesinde; AI destekli tahmin, gerçek zamanlı etkileşim ve modern katmanlı mimarisi ile sektörel düzeyde bir altyapı sunar.
 Proje eğitim amaçlı olarak geliştirilmiştir, ancak mevcut mimarisi ile gerçek bir işletmede uygulanabilir düzeydedir.
 
+---
+
 ## 🖼️ Projeden Ekran Görüntüleri
 
 ### ➡️ Ana Sayfa
@@ -81,6 +83,8 @@ Proje eğitim amaçlı olarak geliştirilmiştir, ancak mevcut mimarisi ile ger�
 <div align="center">
   <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Default-Products-2025-10-19-13_17_14.png" alt="image alt">
 </div>
+
+### ➡️ Admin Paneli
 <div align="center">
   <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-About-Index-2025-10-19-13_18_15.png" alt="image alt">
 </div>
