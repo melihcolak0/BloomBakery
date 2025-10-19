@@ -9,9 +9,9 @@ namespace _15PC_BloomBakery.AIIntegration
 {
     public class RapidApiGPT4oIntegration
     {
-        private readonly string _apiKey = "2e21af8214mshcc76234e6e9bc00p1ba553jsn0731fa49af5d";
-        private readonly string _apiHost = "chatgpt-42.p.rapidapi.com";
-        private readonly string _endpoint = "https://chatgpt-42.p.rapidapi.com/gpt4";
+        private readonly string _apiKey = "my_rapid_api_key";
+        private readonly string _apiHost = "rapid_api_host";
+        private readonly string _endpoint = "rapid_api_endpoint";
 
         public async Task<string> GenerateTextAsync(string prompt)
         {
