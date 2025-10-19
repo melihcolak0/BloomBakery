@@ -1,0 +1,449 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var totalProducts = Model.Count();
+    var totalSales = Model.Sum(x => (double)x.YearTotal);
+    var bestSellingProduct = Model.OrderByDescending(x => (double)x.YearTotal).FirstOrDefault()?.ProductName;
+    var averageMonthly = totalSales / 12;
+}
+
+<!-- KPI Kartları -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center text-white" style="background-color: #6c5ce7;">
+            <div class="card-body">
+                <i class="fas fa-box fa-2x mb-2"></i>
+                <h5 class="card-title text-white">Toplam Ürün Sayısı</h5>
+                <h3 class="card-text text-white">@totalProducts</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center text-dark" style="background-color: #00b894;">
+            <div class="card-body">
+                <i class="fas fa-star fa-2x mb-2"></i>
+                <h5 class="card-title">En Çok Satacak Ürün</h5>
+                <h3 class="card-text">@bestSellingProduct</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center text-dark" style="background-color: #faf79b;">
+            <div class="card-body">
+                <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+                <h5 class="card-title">Yıl Tahmini Toplam Satış</h5>
+                <h3 class="card-text">@totalSales.ToString("N0")</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center text-dark" style="background-color: #e17055;">
+            <div class="card-body">
+                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                <h5 class="card-title">Ortalama Aylık Satış</h5>
+                <h3 class="card-text">@averageMonthly.ToString("N0")</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ürün Bazlı Satış Tablosu -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Ürün Bazlı Satış Tahmini (SsaForecasting - ML.NET)</h4>
+                <p class="card-subtitle mb-4">
+                    ML.NET bölümü ile ilgili işlemleri buradan gerçekleştirebilirsiniz.
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Ürün</th>
+                                <th>Ocak–Eylül Toplamı</th>
+                                <th>Ekim Tahmini</th>
+                                <th>Kasım Tahmini</th>
+                                <th>Aralık Tahmini</th>
+                                <th>Yıl Sonu Toplam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.JanToSep.ToString("N0")</td>
+                                    <td>@item.Oct.ToString("N2")</td>
+                                    <td>@item.Nov.ToString("N2")</td>
+                                    <td>@item.Dec.ToString("N2")</td>
+                                    <td>@item.YearTotal.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ürün Kartları + Trend Grafikleri -->
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-6 col-xl-4 mb-4">
+            <div class="card h-100 shadow-sm" style="background-color: #f7f9fc;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.ProductName</h5>
+
+                    <table class="table table-sm table-bordered mb-3 text-center">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Ocak–Eylül</th>
+                                <th>Ekim</th>
+                                <th>Kasım</th>
+                                <th>Aralık</th>
+                                <th>Yıl Toplam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@item.JanToSep.ToString("N0")</td>
+                                <td>@item.Oct.ToString("N2")</td>
+                                <td>@item.Nov.ToString("N2")</td>
+                                <td>@item.Dec.ToString("N2")</td>
+                                <td>@item.YearTotal.ToString("N2")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="position: relative; height: 200px; width: 100%;">
+                        <canvas class="chart" data-product="@item.ProductName"
+                                data-jan="@item.JanToSep"
+                                data-oct="@item.Oct"
+                                data-nov="@item.Nov"
+                                data-dec="@item.Dec"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Tüm Ürünler Sütun Grafiği -->
+<div class="row mt-5">
+    <div class="col-12 px-0">
+        <div class="card m-0 rounded-0 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Tüm Ürünlerin Yıllık Satış Tahmini (Sütun Grafiği)</h4>
+                <p class="card-subtitle mb-4">
+                    Bu grafik, tüm ürünlerin Ocak–Aralık tahmini toplam satışlarını karşılaştırır.
+                </p>
+                <div style="position: relative; height: 500px; width: 100%;">
+                    <canvas id="allProductsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ürün bazlı line chart
+        document.querySelectorAll('.chart').forEach(function(canvas) {
+            const ctx = canvas.getContext('2d');
+            const productName = canvas.dataset.product;
+            const jan = parseFloat(canvas.dataset.jan);
+            const oct = parseFloat(canvas.dataset.oct);
+            const nov = parseFloat(canvas.dataset.nov);
+            const dec = parseFloat(canvas.dataset.dec);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Ocak–Eylül', 'Ekim', 'Kasım', 'Aralık'],
+                    datasets: [{
+                        label: productName + ' Satış Tahmini',
+                        data: [jan, oct, nov, dec],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, position: 'top' },
+                        title: { display: true, text: productName + ' Satış Trendleri' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        });
+
+        // Tüm ürünler bar chart
+        const ctxAll = document.getElementById('allProductsChart').getContext('2d');
+        const productNames = @Html.Raw(Json.Serialize(Model.Select(x => x.ProductName)));
+        const productTotals = @Html.Raw(Json.Serialize(Model.Select(x => x.YearTotal)));
+
+        new Chart(ctxAll, {
+            type: 'bar',
+            data: {
+                labels: productNames,
+                datasets: [{
+                    label: 'Tahmini Yıllık Satış Miktarı',
+                    data: productTotals,
+                    backgroundColor: productNames.map((_, i) => `rgba(${(i*40)%255}, ${(i*80)%255}, ${(i*120)%255}, 0.6)`),
+                    borderColor: productNames.map((_, i) => `rgba(${(i*40)%255}, ${(i*80)%255}, ${(i*120)%255}, 1)`),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top' },
+                    title: { display: true, text: 'Tüm Ürünlerin Yıllık Satış Tahmini' }
+                },
+                scales: {
+                    x: {
+                        ticks: { autoSkip: false },
+                        grid: { display: false },
+                        categoryPercentage: 0.6,
+                        barPercentage: 0.8
+                    },
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    });
+</script>
+
+@* <div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Toplam Ürün Sayısı</h5>
+                <h3 class="card-text">@totalProducts</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">En Çok Satacak Ürün</h5>
+                <h3 class="card-text">@bestSellingProduct</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Yıl Tahmini Toplam Satış</h5>
+                <h3 class="card-text">@totalSales.ToString("N0")</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Ortalama Aylık Satış</h5>
+                <h3 class="card-text">@averageMonthly.ToString("N0")</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Ürün Bazlı Satış Tahmini (SsaForecasting - ML.NET)</h4>
+                <p class="card-subtitle mb-4">
+                    ML.NET bölümü ile ilgili işlemleri buradan gerçekleştirebilirsiniz.
+                </p>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Ürün</th>
+                                <th>Ocak–Eylül Toplamı</th>
+                                <th>Ekim Tahmini</th>
+                                <th>Kasım Tahmini</th>
+                                <th>Aralık Tahmini</th>
+                                <th>Yıl Sonu Toplam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.JanToSep.ToString("N0")</td>
+                                    <td>@item.Oct.ToString("N2")</td>
+                                    <td>@item.Nov.ToString("N2")</td>
+                                    <td>@item.Dec.ToString("N2")</td>
+                                    <td>@item.YearTotal.ToString("N2")</td>
+                                </tr>                                
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-6 col-xl-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@item.ProductName</h5>
+
+                    <table class="table table-sm table-bordered mb-3 text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Ocak–Eylül</th>
+                                <th>Ekim</th>
+                                <th>Kasım</th>
+                                <th>Aralık</th>
+                                <th>Yıl Toplam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@item.JanToSep.ToString("N0")</td>
+                                <td>@item.Oct.ToString("N2")</td>
+                                <td>@item.Nov.ToString("N2")</td>
+                                <td>@item.Dec.ToString("N2")</td>
+                                <td>@item.YearTotal.ToString("N2")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="position: relative; height: 200px; width: 100%;">
+                        <canvas class="chart" data-product="@item.ProductName"
+                                data-jan="@item.JanToSep"
+                                data-oct="@item.Oct"
+                                data-nov="@item.Nov"
+                                data-dec="@item.Dec"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }    
+</div>
+
+<div class="row mt-5">
+    <div class="col-12 px-0">
+        <!-- px-0: padding kaldırır -->
+        <div class="card m-0 rounded-0">
+            <!-- margin ve radius sıfırla -->
+            <div class="card-body">
+                <h4 class="card-title">Tüm Ürünlerin Yıllık Satış Tahmini (Sütun Grafiği)</h4>
+                <p class="card-subtitle mb-4">
+                    Bu grafik, tüm ürünlerin Ocak–Aralık tahmini toplam satışlarını karşılaştırır.
+                </p>
+                <div style="position: relative; height: 500px; width: 100%;">
+                    <canvas id="allProductsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.chart').forEach(function(canvas) {
+            const ctx = canvas.getContext('2d');
+            const productName = canvas.dataset.product;
+            const jan = parseFloat(canvas.dataset.jan);
+            const oct = parseFloat(canvas.dataset.oct);
+            const nov = parseFloat(canvas.dataset.nov);
+            const dec = parseFloat(canvas.dataset.dec);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Ocak–Eylül', 'Ekim', 'Kasım', 'Aralık'],
+                    datasets: [{
+                        label: productName + ' Satış Tahmini',
+                        data: [jan, oct, nov, dec],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, position: 'top' },
+                        title: { display: true, text: productName + ' Satış Trendleri' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('allProductsChart').getContext('2d');
+
+        const productNames = @Html.Raw(Json.Serialize(Model.Select(x => x.ProductName)));
+        const productTotals = @Html.Raw(Json.Serialize(Model.Select(x => x.YearTotal)));
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: productNames,
+                datasets: [{
+                    label: 'Tahmini Yıllık Satış Miktarı',
+                    data: productTotals,
+                    backgroundColor: productNames.map((_, i) => `rgba(${(i*40)%255}, ${(i*80)%255}, ${(i*120)%255}, 0.6)`),
+                    borderColor: productNames.map((_, i) => `rgba(${(i*40)%255}, ${(i*80)%255}, ${(i*120)%255}, 1)`),
+                    borderWidth: 1
+                }]
+            },
+                options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: true, position: 'top' },
+            title: { display: true, text: 'Tüm Ürünlerin Yıllık Satış Tahmini' }
+        },
+        scales: {
+            x: {
+                ticks: { autoSkip: false },
+                grid: { display: false },
+                // bar yoğunluğunu ayarla
+                categoryPercentage: 0.6,
+                barPercentage: 0.8
+            },
+            y: { beginAtZero: true }
+        }
+    }
+        });
+    });
+</script>
+ *@

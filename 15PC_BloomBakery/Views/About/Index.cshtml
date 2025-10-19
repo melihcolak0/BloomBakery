@@ -1,0 +1,62 @@
+﻿@model List<ResultAboutDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hakkımızda Listesi</h4>
+                <p class="card-subtitle mb-4">
+                    Hakkımızda bölümü ile ilgili ekleme, silme ve güncelleme işlemlerini buradan gerçekleştirebilirsiniz. Tema bütünlüğünün sağlanması için bir tane oluşturmalısınz.
+                </p>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Başlık</th>
+                                <th>Alt Başlık</th>                                
+                                <th>Resim 1</th>
+                                <th>Resim 2</th>
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.AboutId</th>
+                                    <td>@item.Title</td>
+                                    <td>@item.SubTitle</td>                                    
+                                    <td>@item.ImageUrl</td>
+                                    <td>@item.ImageUrl2</td>                                    
+                                    <td>
+                                        <a href="/About/DeleteAbout/@item.AboutId" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/About/UpdateAbout/@item.AboutId" class="btn btn-warning">
+                                            <i class="bi bi-pencil-square"></i> Güncelle
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <a href="/About/CreateAbout" class="btn btn-info">
+                        <i class="bi bi-plus-circle"></i> Yeni Hakkımda Bilgisi Ekle
+                    </a>
+                    <a href="/About/GenerateAnAboutSection" class="btn btn-success">
+                        <i class="bi bi-robot"></i> AI ile Yeni Hakkımda Bilgisi Oluşturma
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

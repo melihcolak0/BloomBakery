@@ -1,0 +1,61 @@
+﻿@model List<ResultChefDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Şef Listesi</h4>
+                <p class="card-subtitle mb-4">
+                    Şefler bölümü ile ilgili ekleme, silme ve güncelleme işlemlerini buradan gerçekleştirebilirsiniz.
+                </p>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Resim</th>
+                                <th>Adı ve Soyadı</th>
+                                <th>Pozisyon</th>                           
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.ChefId</th>
+                                    <td>
+                                        <img src="@item.ImageUrl" alt="chef_image"
+                                             class="rounded-circle" width="60" height="60" />
+                                    </td>
+                                    <td>@item.NameSurname</td>
+                                    <td>@item.Title</td>                                    
+                                    <td>
+                                        <a href="/Chef/DeleteChef/@item.ChefId" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/Chef/UpdateChef/@item.ChefId" class="btn btn-warning">
+                                            <i class="bi bi-pencil-square"></i> Güncelle
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <a href="/Chef/CreateChef" class="btn btn-info">
+                        <i class="bi bi-plus-circle"></i> Yeni Şef Ekle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

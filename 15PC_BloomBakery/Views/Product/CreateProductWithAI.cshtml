@@ -1,0 +1,55 @@
+﻿@model GenerateProductDetailsDto
+
+@{
+    ViewData["Title"] = "CreateProductWithAI";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">AI ile Ürün Ekleme</h4>
+                <p class="card-subtitle mb-4">Ürünler bölümünün AI ile ekleme işlemini buradan gerçekleştirebilirsiniz.</p>
+
+                <form method="post">
+                    <div class="form-group">
+                        <label>Ürün Adı</label>
+                        <input type="text" class="form-control" asp-for="ProductName">
+                    </div>
+                    <div class="form-group">
+                        <label>Birim Fiyat</label>
+                        <input type="text" class="form-control" asp-for="UnitPrice">
+                    </div>
+                    <div class="form-group">
+                        <label>Stok</label>
+                        <input type="number" class="form-control" asp-for="Stock">
+                    </div>
+                    <div class="form-group">
+                        <label>Resim Url</label>
+                        <input type="text" class="form-control" asp-for="ImageUrl">
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Tarif</label>
+                        <textarea class="form-control" rows="5" asp-for="Recipe"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                    </div>                   
+                    <button type="submit" class="btn btn-primary" name="action" value="generate">
+                        <i class="bi bi-robot"></i> Oluştur
+                    </button>
+                    <button type="submit" class="btn btn-success" name="action" value="save">
+                        <i class="bi bi-plus-circle me-1"></i> Ekle
+                    </button>                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

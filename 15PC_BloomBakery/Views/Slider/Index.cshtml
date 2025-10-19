@@ -1,0 +1,56 @@
+﻿@model List<ResultSliderDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Kayan Afiş Listesi</h4>
+                <p class="card-subtitle mb-4">
+                    Kayan Afişler bölümü ile ilgili ekleme, silme ve güncelleme işlemlerini buradan gerçekleştirebilirsiniz.
+                </p>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Başlık</th>
+                                <th>Alt Başlık</th>                               
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.SliderId</th>
+                                    <td>@item.Title</td>
+                                    <td>@item.SubTitle</td>                                                                      
+                                    <td>
+                                        <a href="/Slider/DeleteSlider/@item.SliderId" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/Slider/UpdateSlider/@item.SliderId" class="btn btn-warning">
+                                            <i class="bi bi-pencil-square"></i> Güncelle
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <a href="/Slider/CreateSlider" class="btn btn-info">
+                        <i class="bi bi-plus-circle"></i> Yeni Kayan Afiş Ekle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

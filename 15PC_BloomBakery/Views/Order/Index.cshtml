@@ -1,0 +1,136 @@
+﻿@model List<ResultOrderDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var pageSize = ViewBag.PageSize ?? 5;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+
+    int startPage = currentPage - 2 > 0 ? currentPage - 2 : 1;
+    int endPage = startPage + 4 <= totalPages ? startPage + 4 : totalPages;
+    if (endPage - startPage < 4) startPage = endPage - 4 > 0 ? endPage - 4 : 1;
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Sipariş Listesi</h4>
+                <p class="card-subtitle mb-4">
+                    Siparişler bölümü ile ilgili ekleme, silme ve güncelleme işlemlerini buradan gerçekleştirebilirsiniz.
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    
+                    <div>
+                        <a href="/Order/CreateOrder" class="btn btn-info">
+                            <i class="bi bi-plus-circle"></i> Yeni Sipariş Ekle
+                        </a>
+                    </div>
+
+                    <form method="get" asp-action="Index" class="d-flex align-items-center gap-2">
+                        <input type="text"
+                               name="searchString"
+                               class="form-control"
+                               style="width: 250px;"
+                               value="@ViewBag.SearchString"
+                               placeholder="Ara (Ad, Soyad, Ürün)" />
+
+                        <select name="pageSize"
+                                class="form-control ml-2"
+                                style="width: 80px;"
+                                onchange="this.form.submit()">
+                            <option value="5" selected="@(ViewBag.PageSize == 5)">5</option>
+                            <option value="10" selected="@(ViewBag.PageSize == 10)">10</option>
+                            <option value="25" selected="@(ViewBag.PageSize == 25)">25</option>
+                            <option value="50" selected="@(ViewBag.PageSize == 50)">50</option>
+                        </select>
+
+                        <button type="submit" class="btn btn-primary ml-2">
+                            <i class="bi bi-search"></i> Ara
+                        </button>
+                    </form>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Adı</th>
+                                <th>Soyadı</th>
+                                <th>Ürün</th>
+                                <th>Miktar</th>
+                                <th>Toplam Fiyat</th>
+                                <th>Tarih</th>
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.OrderId</th>
+                                    <td>@item.Name</td>
+                                    <td>@item.Surname</td>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.Amount</td>
+                                    <td>@item.TotalPrice.ToString("0.00") ₺</td>
+                                    <td>@item.OrderDate.ToString("dd MMM yyyy - HH:mm")</td>
+                                    <td>
+                                        <a href="/Order/DeleteOrder/@item.OrderId" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/Order/UpdateOrder/@item.OrderId" class="btn btn-warning btn-sm">
+                                            <i class="bi bi-pencil-square"></i> Güncelle
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">                        
+                        <div>
+                            Sayfa @ViewBag.CurrentPage / @ViewBag.TotalPages
+                        </div>                       
+                        <div>
+                            <nav>
+                                <ul class="pagination justify-content-center mb-0">
+                                    @if (currentPage > 1)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               href="?page=@(currentPage - 1)&pageSize=@pageSize&searchString=@ViewBag.SearchString">« Önceki</a>
+                                        </li>
+                                    }
+
+                                    @for (int i = startPage; i <= endPage; i++)
+                                    {
+                                        <li class="page-item @(i == currentPage ? "active" : "")">
+                                            <a class="page-link"
+                                               href="?page=@i&pageSize=@pageSize&searchString=@ViewBag.SearchString">@i</a>
+                                        </li>
+                                    }
+
+                                    @if (currentPage < totalPages)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               href="?page=@(currentPage + 1)&pageSize=@pageSize&searchString=@ViewBag.SearchString">Sonraki »</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

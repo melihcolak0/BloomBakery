@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg position-relative">
+        <div class="card-header bg-info text-center">
+            <h5 class="text-white">🤖 BloomBot - Akıllı Asistan</h5>
+        </div>
+
+        <div class="card-body" id="chatBox"
+             style="height: 400px; overflow-y: auto; background-color: #f7f7f7; position: relative;">
+        </div>
+
+        <div id="typingIndicator"
+             class="text-muted fst-italic p-2"
+             style="display:none; position:absolute; bottom:60px; left:15px; font-size:14px;">
+            🤖 BloomBot yazıyor...
+        </div>
+
+        <div class="card-footer d-flex">
+            <input type="text" id="userInput" class="form-control" placeholder="Adınız" style="width: 25%;">
+            <input type="text" id="messageInput" class="form-control ml-2" placeholder="Mesajınızı yazın...">
+            <button id="sendButton" class="btn btn-info ml-2">Gönder</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        // Gelen mesajları dinle
+
+        connection.on("ReceiveMessage", function (user, message) {
+            const chatBox = document.getElementById("chatBox");
+            const typingIndicator = document.getElementById("typingIndicator");
+            const currentUser = document.getElementById("userInput").value || "Admin";
+
+            if (user === currentUser) return;
+
+            if (user === "BloomBot") typingIndicator.style.display = "none";
+
+            // Markdown benzeri biçimlendirme
+            message = message
+                .replace(/### (.*?)(?=\n|$)/g, "<strong style='font-size:16px;'>$1</strong>")
+                .replace(/## (.*?)(?=\n|$)/g, "<strong style='font-size:14px;'>$1</strong>")
+                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                .replace(/- (.*?)(?=\n|$)/g, "• $1")
+                .replace(/\n/g, "<br>");
+
+            const msgContainer = document.createElement("div");
+            msgContainer.classList.add("d-flex", "mb-2");
+            msgContainer.style.width = "100%";
+
+            const msgBubble = document.createElement("div");
+            msgBubble.classList.add("p-2", "rounded");
+            msgBubble.style.maxWidth = "70%";
+            msgBubble.style.wordWrap = "break-word";
+
+            if (user === "BloomBot") {
+                msgContainer.style.justifyContent = "flex-start"; // sol
+                msgBubble.style.backgroundColor = "#d0ecf5";
+                msgBubble.style.color = "#000";
+            } else {
+                msgContainer.style.justifyContent = "flex-end"; // sağ
+                msgBubble.style.backgroundColor = "#dcf8c6";
+                msgBubble.style.color = "#000";
+            }
+
+            // Sadece ilk satırda kullanıcı adını göster, geri kalan alt satıra geçsin
+            const firstLineEnd = message.indexOf("<br>");
+            if (firstLineEnd !== -1) {
+                msgBubble.innerHTML = `<strong>${user}:</strong> ${message.substring(0, firstLineEnd)}<br>${message.substring(firstLineEnd + 4)}`;
+            } else {
+                msgBubble.innerHTML = `<strong>${user}:</strong> ${message}`;
+            }
+
+            msgContainer.appendChild(msgBubble);
+            chatBox.appendChild(msgContainer);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });       
+
+        connection.start().catch(err => console.error(err));
+
+        // Mesaj gönderme işlemi
+        document.getElementById("sendButton").addEventListener("click", sendMessage);
+        document.getElementById("messageInput").addEventListener("keypress", function (e) {
+            if (e.key === "Enter") sendMessage();
+        });
+
+        function sendMessage() {
+            const user = document.getElementById("userInput").value || "Admin";
+            const message = document.getElementById("messageInput").value;
+            const chatBox = document.getElementById("chatBox");
+            const typingIndicator = document.getElementById("typingIndicator");
+
+            if (message.trim() !== "") {
+                // Kullanıcının mesajını hemen göster
+                const msgContainer = document.createElement("div");
+                msgContainer.classList.add("d-flex", "justify-content-end", "mb-2");
+                msgContainer.style.width = "100%";
+
+                const msgBubble = document.createElement("div");
+                msgBubble.classList.add("p-2", "rounded");
+                msgBubble.style.maxWidth = "70%";
+                msgBubble.style.backgroundColor = "#dcf8c6";
+                msgBubble.style.color = "#000";
+                msgBubble.innerHTML = `<strong>${user}:</strong> ${message}`;
+
+                msgContainer.appendChild(msgBubble);
+                chatBox.appendChild(msgContainer);
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // "BloomBot yazıyor..." göstergesi
+                typingIndicator.style.display = "block";
+
+                // SignalR ile mesaj gönder
+                connection.invoke("SendMessage", user, message)
+                    .catch(err => console.error(err));
+
+                document.getElementById("messageInput").value = "";
+            }
+        }
+    </script>
+}

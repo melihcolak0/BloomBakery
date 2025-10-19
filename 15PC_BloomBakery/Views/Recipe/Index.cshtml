@@ -1,0 +1,63 @@
+﻿@model RecipeDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Tarif Öneri Asistanı</h4>
+                <p class="card-subtitle mb-4">AI bölümlerinin işlemlerini buradan gerçekleştirebilirsiniz.</p>
+
+                <form method="post">
+                    <div class="form-group">
+                        <label>Malzemeler</label>
+                        <textarea class="form-control" rows="5" asp-for="Prompt"></textarea>
+                    </div>                   
+                    <div class="form-group">
+                        <label>Öneriler</label>
+                        <textarea id="answerEditor" asp-for="Answer"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-robot"></i> Öneri Al
+                    </button>                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<style>
+    #answerEditor {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Markdown işaretlerini gizle */
+    .CodeMirror-code {
+        font-family: inherit !important;
+    }
+</style>
+
+<script>
+    var simplemde = new SimpleMDE({
+        element: document.getElementById("answerEditor"),
+        spellChecker: false,
+        placeholder: "AI tarafından oluşturulan cevabı buradan görebilirsiniz...",
+        status: false,
+        toolbar: false,
+        renderingConfig: {
+            singleLineBreaks: false,
+            codeSyntaxHighlighting: false,
+        }
+    });
+
+    // Preview modunu aktif et
+    simplemde.togglePreview();
+    simplemde.codemirror.setOption("readOnly", true);
+</script>

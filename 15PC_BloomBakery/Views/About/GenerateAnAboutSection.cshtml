@@ -1,0 +1,62 @@
+﻿@model ResultRapidApiGPT4oIntegrationDto
+@{
+    ViewData["Title"] = "GenerateAnAboutSection";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">AI ile Hakkımızda Bilgisi Oluşturma</h4>
+                <p class="card-subtitle mb-4">AI bölümlerinin işlemlerini buradan gerçekleştirebilirsiniz.</p>
+
+                <form method="post">                   
+                    <div class="form-group">
+                        <label>Başlık</label>
+                        <input type="text" class="form-control" asp-for="Title">
+                    </div>
+                    <div class="form-group">
+                        <label>Alt Başlık</label>
+                        <input type="text" class="form-control" asp-for="SubTitle">
+                    </div>
+                    <div class="form-group">
+                        <label>Özellik 1</label>
+                        <input type="text" class="form-control" asp-for="Feature1">
+                    </div>
+                    <div class="form-group">
+                        <label>Özellik 2</label>
+                        <input type="text" class="form-control" asp-for="Feature2">
+                    </div>
+                    <div class="form-group">
+                        <label>Özellik 3</label>
+                        <input type="text" class="form-control" asp-for="Feature3">
+                    </div>
+                    <div class="form-group">
+                        <label>Özellik 4</label>
+                        <input type="text" class="form-control" asp-for="Feature4">
+                    </div>
+                    <div class="form-group">
+                        <label>Resim Url</label>
+                        <input type="text" class="form-control" asp-for="ImageUrl">
+                    </div>
+                    <div class="form-group">
+                        <label>Resim Url 2</label>
+                        <input type="text" class="form-control" asp-for="ImageUrl2">
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" name="action" value="generate">
+                        <i class="bi bi-robot"></i> Oluştur
+                    </button>
+                    <button type="submit" class="btn btn-success" name="action" value="save">
+                        <i class="bi bi-plus-circle me-1"></i> Ekle
+                    </button>
+                </form>                
+            </div>
+        </div>
+    </div>
+</div>

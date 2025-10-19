@@ -1,0 +1,68 @@
+﻿@model List<ResultProductDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Ürün Listesi</h4>
+                <p class="card-subtitle mb-4">
+                    Ürünler bölümü ile ilgili ekleme, silme ve güncelleme işlemlerini buradan gerçekleştirebilirsiniz.
+                </p>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Resim</th>
+                                <th>Ürün</th>
+                                <th>Birim Fiyat</th>
+                                <th>Stok</th>                               
+                                <th>Kategori</th>  
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.ProductId</th>
+                                    <td>
+                                        <img src="@item.ImageUrl" alt="product_image"
+                                             class="rounded-circle" width="60" height="60" />
+                                    </td>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.UnitPrice.ToString("0.00") ₺</td>
+                                    <td>@item.Stock</td>
+                                    <td>@item.CategoryName</td>
+                                    <td>
+                                        <a href="/Product/DeleteProduct/@item.ProductId" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/Product/UpdateProduct/@item.ProductId" class="btn btn-warning">
+                                            <i class="bi bi-pencil-square"></i> Güncelle
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <a href="/Product/CreateProduct" class="btn btn-info">
+                        <i class="bi bi-plus-circle"></i> Yeni Ürün Ekle
+                    </a>
+                    <a href="/Product/CreateProductWithAI" class="btn btn-success">
+                        <i class="bi bi-robot"></i> AI ile Yeni Hakkımda Bilgisi Oluşturma
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

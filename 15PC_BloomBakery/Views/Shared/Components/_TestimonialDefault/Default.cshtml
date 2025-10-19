@@ -1,0 +1,17 @@
+﻿@model List<ResultTestimonialDto>
+
+<div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+    @foreach(var item in Model)
+    {
+        <div class="testimonial-item bg-white rounded p-4">
+            <div class="d-flex align-items-center mb-4">
+                <img class="flex-shrink-0 rounded-circle border p-1" src="@item.ImageUrl" alt="">
+                <div class="ms-4">
+                    <h5 class="mb-1">@item.NameSurname</h5>
+                    <span>@item.Profession</span>
+                </div>
+            </div>
+            <p class="mb-0">@item.Comment</p>
+        </div>
+    }   
+</div>

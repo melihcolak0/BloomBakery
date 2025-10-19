@@ -1,0 +1,51 @@
+﻿@model GetOrderDto
+
+@{
+    ViewData["Title"] = "UpdateOrder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Sipariş Bilgisi Güncelleme</h4>
+                <p class="card-subtitle mb-4">Siparişler bölümünün güncelleme işlemini buradan gerçekleştirebilirsiniz.</p>
+
+                <form method="post">
+                    <input type="hidden" asp-for="OrderId" />
+                    <div class="form-group">
+                        <label>Adı</label>
+                        <input type="text" class="form-control" asp-for="Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Soyadı</label>
+                        <input type="text" class="form-control" asp-for="Surname">
+                    </div>
+                    <div class="form-group">
+                        <label>Ürün</label>
+                        @Html.DropDownListFor(x => x.ProductId, (List<SelectListItem>)ViewBag.ProductList, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Miktar</label>
+                        <input type="text" class="form-control" asp-for="Amount">
+                    </div>
+                    <div class="form-group">
+                        <label>Toplam Fiyat</label>
+                        <input type="text" class="form-control" asp-for="TotalPrice">
+                    </div>
+                    <div class="form-group">
+                        <label>Sipariş Tarihi</label>
+                        <input type="datetime-local" class="form-control" asp-for="OrderDate">
+                    </div>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+                        <i class="bi bi-pencil-square me-1"></i> Güncelle
+                    </button>
+                    <a href="/Order/Index" class="btn btn-dark">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Geri
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

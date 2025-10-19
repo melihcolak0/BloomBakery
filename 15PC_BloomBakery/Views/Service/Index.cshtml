@@ -1,0 +1,70 @@
+﻿@model List<ResultServiceDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hizmetler Listesi</h4>
+                <p class="card-subtitle mb-4">
+                    Hizmetler bölümü ile ilgili ekleme, silme ve güncelleme işlemlerini buradan gerçekleştirebilirsiniz.
+                </p>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Başlık</th>
+                                <th>İkon Url</th>
+                                <th>Açıklama</th>                                
+                                <th>Sil</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.ServiceId</th>
+                                    <td>@item.Title</td>
+                                    <td>@item.IconUrl</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Description))
+                                        {
+                                            if (item.Description.Length <= 120)
+                                            {
+                                                @item.Description
+                                            }
+                                            else
+                                            {
+                                                @(item.Description.Substring(0, 120) + "...")
+                                            }
+                                        }
+                                    </td>                                                                     
+                                    <td>
+                                        <a href="/Service/DeleteService/@item.ServiceId" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/Service/UpdateService/@item.ServiceId" class="btn btn-warning">
+                                            <i class="bi bi-pencil-square"></i> Güncelle
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <a href="/Service/CreateService" class="btn btn-info">
+                        <i class="bi bi-plus-circle"></i> Yeni Hizmet Ekle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
