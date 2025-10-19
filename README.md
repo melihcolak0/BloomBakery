@@ -71,3 +71,61 @@ Kullanıcılar burada:
 ## 💡 Genel Değerlendirme
 Bloom Bakery, klasik bir ürün yönetimi projesinin ötesinde; AI destekli tahmin, gerçek zamanlı etkileşim ve modern katmanlı mimarisi ile sektörel düzeyde bir altyapı sunar.
 Proje eğitim amaçlı olarak geliştirilmiştir, ancak mevcut mimarisi ile gerçek bir işletmede uygulanabilir düzeydedir.
+
+## 🖼️ Projeden Ekran Görüntüleri
+
+### ➡️ Ana Sayfa
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Default-Index-2025-10-19-13_15_50.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Default-Products-2025-10-19-13_17_14.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-About-Index-2025-10-19-13_18_15.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-About-CreateAbout-2025-10-19-13_18_33.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-About-GenerateAnAboutSection-2025-10-19-13_18_40.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-About-UpdateAbout-1-2025-10-19-13_18_55.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Category-Index-2025-10-19-13_19_19.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Chef-Index-2025-10-19-13_19_37.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Order-Index-2025-10-19-13_19_50.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Product-Index-2025-10-19-13_20_07.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Product-CreateProductWithAI-2025-10-19-13_20_16.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Slider-Index-2025-10-19-13_20_47.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Service-Index-2025-10-19-13_20_52.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Testimonial-Index-2025-10-19-13_20_59.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-ChatBot-Index-2025-10-19-13_31_39%20(1).png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-10-19%20133339.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Recipe-Index-2025-10-19-13_29_17.png" alt="image alt">
+</div>
+<div align="center">
+  <img src="https://github.com/melihcolak0/BloomBakery/blob/4080ef4bb6c74d9e691b770ee85f71a672736fc7/ss/screencapture-localhost-7186-Prediction-Index-2025-10-19-13_24_47.png" alt="image alt">
+</div>
